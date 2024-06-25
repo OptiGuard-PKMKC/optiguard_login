@@ -1,19 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:optiguard/components/box_logo.dart';
+import 'package:optiguard/components/date_picker.dart';
 import 'package:optiguard/components/logo.dart';
+import 'package:optiguard/components/radio_gender.dart';
 import 'package:optiguard/components/sponsor.dart';
 import 'package:optiguard/components/text_input.dart';
 import 'package:optiguard/pages/login_page.dart';
-import 'package:optiguard/pages/register_page.dart';
+import 'package:optiguard/pages/role_selection.dart';
 
 class RegisterContPage extends StatelessWidget {
   RegisterContPage({super.key});
 
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
+  final birthController = TextEditingController();
+  final cityController = TextEditingController();
+  final addressController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    List<String> genderOptions = ['laki-laki', 'perempuan'];
+
     return Scaffold(
       backgroundColor: Colors.blue.shade400,
       body: SafeArea(
@@ -32,9 +37,9 @@ class RegisterContPage extends StatelessWidget {
 
                 const SizedBox(height: 10),
 
+                // Remaining height container
                 Container(
                   width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height,
                   decoration: const BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.only(
@@ -47,53 +52,96 @@ class RegisterContPage extends StatelessWidget {
                     vertical: 20,
                   ),
                   child: Column(
+                    crossAxisAlignment:
+                        CrossAxisAlignment.start, // Align text to the left
                     children: [
                       // text
-                      const Text(
-                        '🥵😵🤪🤪🥴',
-                        style: TextStyle(
-                            fontSize: 22,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black),
+                      const Center(
+                        // Center the text
+                        child: Text(
+                          'Isi Data Diri Anda',
+                          style: TextStyle(
+                              fontSize: 22,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black),
+                        ),
                       ),
 
                       const SizedBox(height: 15),
 
                       // form
+                      DatePicker(
+                        controller: birthController,
+                        labeltext: 'Tanggal Lahir',
+                        hintText: 'Masukan tanggal lahir',
+                        obscureText: false,
+                      ),
+
+                      const SizedBox(height: 15),
+
+                      // form
+                      const Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 10),
+                        child: Text('Jenis Kelamin',
+                            style: TextStyle(
+                              fontSize: 18,
+                              color: Colors.black,
+                            )),
+                      ),
+                      RadioGender(genderOptions: genderOptions),
+
+                      const SizedBox(height: 15),
+
                       TextInput(
-                        controller: emailController,
-                        labelText: 'Email',
-                        hintText: 'Masukan email Anda',
+                        controller: cityController,
+                        labelText: 'Kota/Kabupaten',
+                        hintText: 'Masukan kota/kabupaten',
                         obscureText: false,
                       ),
 
                       const SizedBox(height: 15),
 
                       TextInput(
-                        controller: passwordController,
-                        labelText: 'Password',
-                        hintText: 'Masukan password Anda',
-                        obscureText: true,
+                        controller: addressController,
+                        labelText: 'Alamat',
+                        hintText: 'Masukan alamat',
+                        obscureText: false,
                       ),
 
-                      // button
                       const SizedBox(height: 15),
 
-                      FloatingActionButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => LoginPage(),
+                      // button
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        child: SizedBox(
+                          height: 35,
+                          width: double.infinity,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              elevation: 0, // Disable elevation
+                              backgroundColor: Colors.blue,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30),
+                              ),
                             ),
-                          );
-                        },
-                        child: const Text(
-                          'Masuk',
-                          style: TextStyle(color: Colors.white),
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const RoleSelection(),
+                                ),
+                              );
+                            },
+                            child: const Text(
+                              'Daftar',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 18,
+                              ),
+                            ),
+                          ),
                         ),
                       ),
-
                       const SizedBox(height: 25),
 
                       // other methods
@@ -140,7 +188,7 @@ class RegisterContPage extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           const Text(
-                            'Belum punya akun?',
+                            'Sudah punya akun?',
                             style: TextStyle(
                               color: Colors.grey,
                             ),
@@ -151,12 +199,12 @@ class RegisterContPage extends StatelessWidget {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => RegisterPage(),
+                                  builder: (context) => LoginPage(),
                                 ),
                               );
                             },
                             child: const Text(
-                              'Daftar',
+                              'Masuk',
                               style: TextStyle(
                                 color: Colors.blue,
                                 fontWeight: FontWeight.bold,

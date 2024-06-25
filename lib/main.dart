@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:optiguard/pages/login_page.dart';
+import 'package:optiguard/pages/home_page.dart';
 import 'package:optiguard/pages/register_page.dart';
+import 'package:optiguard/pages/role_selection.dart';
+import 'package:optiguard/pages/splash_page.dart';
+import 'package:optiguard/pages/onboarding_page.dart';
+import 'package:optiguard/pages/login_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,7 +21,15 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
           primarySwatch: Colors.blue,
           visualDensity: VisualDensity.adaptivePlatformDensity),
-      home: LoginPage(),
+      routes: {
+        '/login': (context) => LoginPage(),
+        '/register': (context) => RegisterPage(),
+        '/registerCont': (context) => RegisterPage(),
+        '/role': (context) => const RoleSelection(),
+        '/onboarding': (context) => const OnboardingPage(),
+        '/home': (context) => const HomePage(),
+      },
+      home: const SplashPage(),
     );
   }
 }
